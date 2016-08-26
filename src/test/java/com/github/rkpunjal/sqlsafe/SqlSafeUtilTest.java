@@ -1,4 +1,4 @@
-package com.rk.sqlsafe;
+package com.github.rkpunjal.sqlsafe;
 
 import org.junit.Test;
 

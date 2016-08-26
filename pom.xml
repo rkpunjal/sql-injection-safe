@@ -3,9 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rk.sqlsafe</groupId>
+    <groupId>com.github.rkpunjal.sqlsafe</groupId>
     <artifactId>sql-injection-safe</artifactId>
     <version>1.0.0.Final</version>
+    <packaging>jar</packaging>
 
     <name>SQL-Injection-Safe Annotation</name>
     <description>
@@ -37,7 +38,9 @@
     </properties>
 
     <scm>
-        <url>https://svn.apache.org/viewvc/maven</url>
+        <connection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</connection>
+        <developerConnection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</developerConnection>
+        <url>git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</url>
     </scm>
 
     <dependencies>

@@ -1,4 +1,4 @@
-package com.rk.sqlsafe;
+package com.github.rkpunjal.sqlsafe;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
