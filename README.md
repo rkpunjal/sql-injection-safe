@@ -24,6 +24,9 @@ https://dzone.com/articles/custom-annotation-in-java-for-sql-injection-safe-p
 
 It's the same code that has been slightly enhanced and modified so that now you have the annotation directly for your own use.
 
+---
+
+# Detail Explanation for usage in a Spring mvc controller
 
 You can also this used it in a spring mvc controller to validate the incoming request parameter.
 
@@ -31,6 +34,7 @@ Spring MVC has it’s own way of running validators on RequestParameters.
 Hence you have to first create a wrapper class annotate your parameter.
 
 eg:
+`
 public static class IdWrapper{
     private @SQLInjectionSafe String id;
     public String getId() {
@@ -40,14 +44,33 @@ public static class IdWrapper{
         this.id = id;
     }
 }
+`
 
 Then you can use the wrapper in your controller like this:
 
+`
 @RequestMapping(value = "/getById)
 public MyResponseObject getById(
         @Valid @ModelAttribute() IdWrapper idWrapper){
 // do your stuff
 }
+`
+
+
+Now when you have a validation Failure on the incoming parameter, Spring throws a BindException.
+If not handeled, the BindException is sent across as response directly.
+
+To send a cleaner response, you can create an ExceptionHandler method in the controller.
+
+This could be something like this :
+
+@ExceptionHandler(BindException.class)
+public @ResponseBody WebResponse handleBindException(BindException be ){
+    return new MyResponseObject(false,
+            getBindExceptionMessage(be) // find and send an appropriate response
+    );
+}
+
 
 Refer to these links to understand in detail why you need to create a wrapper class for the parametes.
 - http://copyrightdev.tumblr.com/post/92560458673/tips-tricks-having-fun-with-spring-validators
