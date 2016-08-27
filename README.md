@@ -1,8 +1,8 @@
 # Annotation for SQL Injection Safe Parameters and fields, and Util for Sql-Injection-Safe check
 
-Through this library you get an annotation SQLInjectionSafe for validating if field-values or parameter-values are SQL-Injection safe
+Through this library you get an annotation SQLInjectionSafe for validating if field-values or parameter-values are SQL-Injection safe.
 
-This Library has been thoroughly tested with various sql-injection-embedded data samples.
+The library is **extremely light-weight** and has been thoroughly tested with various sql-injection-embedded data samples.
 
 To use this, include this dependency in your pom.xml
 
