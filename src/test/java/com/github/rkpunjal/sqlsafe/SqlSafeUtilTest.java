@@ -61,12 +61,46 @@ public class SqlSafeUtilTest {
                 "abcd123",
                 "123abcd",
                 "abcd",
+                " OR adfadfa adf column1 = COLUMN1",
+                " and adfadfa adf column1 = COLUMN1",
         };
 
         for(String safeData : safeDataSamples){
             assertTrue("Failed to qualify this as SQL-injection safe data : " + safeData,
                     SqlSafeUtil.isSqlInjectionSafe(safeData)
             );
+        }
+
+    }
+
+    @Test
+    public void testForEqualsInjection(){
+
+        String[] maliciousSamples = {
+                " OR false ",
+                " OR true ",
+                " and true ",
+                " OR equals true ",
+                " OR not equals true ",
+                " OR equals false ",
+                " and equals false ",
+                " OR 1=1",
+                " and 1=1",
+                " OR column1=COLUMN1",
+                " OR column1 = COLUMN1",
+                " OR column1!=COLUMN1",
+                " OR column1<>COLUMN1",
+                " OR colu_mn1=COL_UMN1",
+                " OR 'A'='A'",
+                " OR '1afA'='2fadfA'",
+                " OR 1=1 OR 2=2",
+                " OR 1=1 and 2=2",
+                " and 1=1 and 2=2",
+                " and 1=1 or 2=2",
+        };
+
+        for(String maliciousData : maliciousSamples){
+            testForPurelyUnSafeDataWithAllVariationsExcludeEmptySpacesCheck(maliciousData);
         }
 
     }
@@ -116,7 +150,8 @@ public class SqlSafeUtilTest {
         );
 
     }
-    private void testForPurelyUnSafeDataWithAllVariations(String maliciousPart) {
+
+    private void testForPurelyUnSafeDataWithAllVariations(String maliciousPart, boolean emptySpaceCheckRequired) {
         String prefix = "some-Data-prefix";
         String suffix = "some-Data-suffix";
         String space = " ";
@@ -134,9 +169,11 @@ public class SqlSafeUtilTest {
                 SqlSafeUtil.isSqlInjectionSafe(maliciousData.toUpperCase())
         );
 
-        assertFalse("Failed to detect SQL-unsafe data : " + removeAllSpaces(maliciousData),
-                SqlSafeUtil.isSqlInjectionSafe(removeAllSpaces(maliciousData))
-        );
+        if(emptySpaceCheckRequired) {
+            assertFalse("Failed to detect SQL-unsafe data : " + removeAllSpaces(maliciousData),
+                    SqlSafeUtil.isSqlInjectionSafe(removeAllSpaces(maliciousData))
+            );
+        }
 
         prefix = "";
         suffix = "";
@@ -146,9 +183,21 @@ public class SqlSafeUtilTest {
                 SqlSafeUtil.isSqlInjectionSafe(maliciousData)
         );
 
-        assertFalse("Failed to detect SQL-unsafe data : " + removeAllSpaces(maliciousData),
-                SqlSafeUtil.isSqlInjectionSafe(removeAllSpaces(maliciousData))
-        );
+        if(emptySpaceCheckRequired){
+            assertFalse("Failed to detect SQL-unsafe data : " + removeAllSpaces(maliciousData),
+                    SqlSafeUtil.isSqlInjectionSafe(removeAllSpaces(maliciousData))
+            );
+        }
+
+    }
+
+    private void testForPurelyUnSafeDataWithAllVariations(String maliciousPart) {
+        testForPurelyUnSafeDataWithAllVariations(maliciousPart, true);
+    }
+
+
+    private void testForPurelyUnSafeDataWithAllVariationsExcludeEmptySpacesCheck(String maliciousPart) {
+        testForPurelyUnSafeDataWithAllVariations(maliciousPart, false);
 
     }
 

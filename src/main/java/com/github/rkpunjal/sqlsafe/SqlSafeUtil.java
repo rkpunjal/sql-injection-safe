@@ -23,7 +23,13 @@ public class SqlSafeUtil {
                     "SEQUENCE, RESTORE POINT, PFILE, CLASS, CURSOR, OBJECT, RULE, USER, DATASET, DATASTORE, " +
                     "COLUMN, FIELD, OPERATOR";
 
-    private static final String[] sqlRegexps = {
+    private static final String[] SQL_REGEXPS = {
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+(true|false)(\\s)*(.*)",
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+(\\w)(\\s)*(\\=)(\\s)*(\\w)(\\s)*(.*)",
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+(equals|not equals)(\\s)+(true|false)(\\s)*(.*)",
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(\\=)(\\s)*([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(.*)",
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(\\!\\=)(\\s)*([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(.*)",
+            "(?i)(.*)(\\b)+(OR|AND)(\\s)+([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(\\<\\>)(\\s)*([0-9A-Za-z_'][0-9A-Za-z\\d_']*)(\\s)*(.*)",
             "(?i)(.*)(\\b)+SELECT(\\b)+\\s.*(\\b)+FROM(\\b)+\\s.*(.*)",
             "(?i)(.*)(\\b)+INSERT(\\b)+\\s.*(\\b)+INTO(\\b)+\\s.*(.*)",
             "(?i)(.*)(\\b)+UPDATE(\\b)+\\s.*(.*)",
@@ -47,8 +53,10 @@ public class SqlSafeUtil {
 
     };
 
+
     // pre-build the Pattern objects for faster validation
-    private static final List<Pattern> validationPatterns = buildValidationPatterns();
+    // private static final List<Pattern> validationPatterns = buildValidationPatterns();
+    private static final List<Pattern> validationPatterns = buildPatterns(SQL_REGEXPS);
 
     /**
      * Determines if the provided string value is SQL-Injection-safe.
@@ -77,10 +85,10 @@ public class SqlSafeUtil {
         return matcher.matches();
     }
 
-    private static List<Pattern> buildValidationPatterns(){
+    private static List<Pattern> buildPatterns(String[] expressionStrings){
         List<Pattern> patterns = new ArrayList<Pattern>();
-        for(String sqlExpression : sqlRegexps){
-            patterns.add(getPattern(sqlExpression));
+        for(String expression : expressionStrings){
+            patterns.add(getPattern(expression));
         }
         return patterns;
     }

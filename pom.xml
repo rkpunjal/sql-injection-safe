@@ -5,13 +5,14 @@
 
     <groupId>com.github.rkpunjal.sqlsafe</groupId>
     <artifactId>sql-injection-safe</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>SQL-Injection-Safe Annotation</name>
     <description>
-        This extremely lightweight library provides Annotation and a Util class to verify if the provided string value is Sql-Injection-safe.
-        This is backed by thorough and intelligent tests.
+        This is an extremely lightweight library that provides
+        an Annotation and a Utility class to verify if the provided string value is Sql-Injection-safe.
+        This is backed by thorough and intelligent unit-tests.
     </description>
     <url>https://github.com/rkpunjal/sql-injection-safe</url>
 
