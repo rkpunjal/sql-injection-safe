@@ -6,11 +6,11 @@ The library is **extremely light-weight** and has been thoroughly tested with va
 
 To use this, include this dependency in your pom.xml
 
-		<dependency>
-		  <groupId>com.github.rkpunjal.sqlsafe</groupId>
-		  <artifactId>sql-injection-safe</artifactId>
-		  <version>1.0.1</version>
-		</dependency>
+            <dependency>
+              <groupId>com.github.rkpunjal.sqlsafe</groupId>
+              <artifactId>sql-injection-safe</artifactId>
+              <version>1.0.2</version>
+            </dependency>
 
 A usage could look something like this
 `private @SQLInjectionSafe String id;`
