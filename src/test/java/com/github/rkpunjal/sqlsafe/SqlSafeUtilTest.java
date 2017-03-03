@@ -29,6 +29,8 @@ public class SqlSafeUtilTest {
                 "alter table abc",
                 "truncate table abc",
                 "desc abc",
+                "select id",
+                "select 'abc'",
         };
 
         for(String maliciousPart : maliciousDataSamples){
